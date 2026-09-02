@@ -33,14 +33,14 @@ app = FastAPI(title="HOS Calibration Range", version="0.1.0")
 # with a Python error here. Tighten allow_origins to the real deployed
 # frontend domain before this ever goes to production - "*" or a
 # wildcard localhost list is a local-only convenience, not a prod setting.
+_ALLOWED_ORIGINS = ["https://hos.eitikobata.com"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=_ALLOWED_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-_ALLOWED_ORIGINS = {"http://localhost:3000", "http://127.0.0.1:3000"}
 
 
 @app.exception_handler(Exception)
