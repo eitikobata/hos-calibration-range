@@ -1,0 +1,95 @@
+:root {
+  /* Color: a maintenance-bay console, not a sci-fi HUD. Patlabor's actual
+     visual world is industrial and lived-in - closer to a mechanic's
+     terminal in the SV2 hangar than a glowing cyberpunk interface.
+     Amber CRT phosphor, not the neon-green "hacker terminal" cliche;
+     warm blacks and brass/rust borders instead of cold grey. */
+  --bg: #16140f;
+  --panel: #1f1c15;
+  --panel-border: #3a3225;
+  --text: #e8ddc7;
+  --text-dim: #9a8f76;
+  --amber: #e8a33d;
+  --amber-bright: #f4bc63;
+  --warn: #d97706;
+  --danger: #c2462e;
+
+  --font-sans: ui-sans-serif, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Consolas", "Liberation Mono",
+    monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  /* Faint technical-drawing grid - barely visible, reads as "blueprint
+     paper" texture rather than as a decorative sci-fi background effect.
+     Low-alpha lines directly, no blend-mode trickery needed. */
+  background-image: linear-gradient(rgba(232, 163, 61, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 163, 61, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-attachment: fixed;
+}
+
+input,
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* CRT scanlines: a fixed overlay, not baked into any one element, so it
+   sits over everything uniformly regardless of scroll position.
+   pointer-events: none is load-bearing here - without it this transparent
+   full-viewport layer would silently swallow every click and input focus
+   underneath it. Kept subtle (low alpha) so body text stays legible;
+   this is meant to read as "old monitor", not obscure the content. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.18) 0px,
+    rgba(0, 0, 0, 0.18) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

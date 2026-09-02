@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+backend/build/
+infra/cdk.out/
+infra/cdk.context.json
+.pytest_cache/
+*.egg-info/
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
